@@ -54,7 +54,7 @@ struct AggregationFunctionEstimateCompressionRatioData
     UInt64 merged_compressed_size = 0;
     UInt64 merged_uncompressed_size = 0;
 
-    std::shared_ptr<NullWriteBuffer> null_buf;
+    std::unique_ptr<NullWriteBuffer> null_buf;
     std::shared_ptr<CompressedWriteBuffer> compressed_buf;
 
     [[maybe_unused]] ~AggregationFunctionEstimateCompressionRatioData()
@@ -79,7 +79,7 @@ private:
     {
         if (!data(place).null_buf)
         {
-            data(place).null_buf = std::make_shared<NullWriteBuffer>();
+            data(place).null_buf = std::make_unique<NullWriteBuffer>();
         }
         if (!data(place).compressed_buf)
         {
